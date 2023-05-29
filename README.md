@@ -15,3 +15,4 @@ AS
 BEGIN
   SELECT * FROM Shoes WHERE Color = @color;
 END;
+```
