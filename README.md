@@ -4,7 +4,7 @@
 
 ## We shall learn how to:
 
-1. manage stored procedures in SQL Server including;
+1. manage stored procedures in SQL Server including;  
 a.` creating, `  
 b.` executing, `  
 c. `modifying, `  
@@ -150,11 +150,11 @@ END;
 ```
 
 ## Executing a stored procedure with one parameter:
-=> Lets execute the procedure and pass the `min_price` as `170`.  
+=> Lets execute the procedure and pass the `min_price` as `500`.  
 => You pass an argument to it as follows:
 
 ```sql
-EXEC findShoes 170;
+EXEC findShoes 500;
 ```
 
 ## Executing a stored procedure with multiple parameters:
@@ -183,15 +183,15 @@ END;
 ### Executing a Stored Procedure with multiple parameters
 
 ```sql
-EXEC findShoes 200, 500;
+EXEC findShoes 500, 3500;
 ```
 
 ### Executing Stored Parameters using `Named parameters`
 
 ```sql
 EXECUTE findShoes 
-    @min_price = 200, 
-    @max_price = 500;
+    @min_price = 500, 
+    @max_price = 3500;
 ```
 
 ## Creating text parameters:
@@ -221,8 +221,8 @@ END;
 
 ```sql
 EXECUTE findShoes 
-    @min_price = 200, 
-    @max_price = 500,
+    @min_price = 500, 
+    @max_price = 3500,
     @name = 'Adidas';
 ```
 
@@ -233,7 +233,7 @@ EXECUTE findShoes
 ```sql
 ALTER PROCEDURE findShoes(
     @min_price AS DECIMAL = 0,
-    @max_price AS DECIMAL = 100000,
+    @max_price AS DECIMAL = 10000,
     @name AS VARCHAR(max)
 )
 AS
@@ -286,9 +286,17 @@ END;
 
 ```sql
 EXECUTE findShoes
-@min_price = 200,
-@name = 'Sahara';
+@min_price = 500,
+@name = 'Vans';
 ```
 
-## Stored Procedure Output Parameters
-=> Used to return data back to the calling program.
+
+
+
+
+
+
+ `THE MORE YOU KNOW, THE MORE YOU REALIZE HOW MUCH YOU DON'T KNOW. ` 
+`The less you know, the more you think you know everything. ` 
+ `Knowledge is humbling.  `
+` Ignorance is arrogant.`
