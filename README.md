@@ -290,13 +290,152 @@ EXECUTE findShoes
 @name = 'Vans';
 ```
 
+## VARIABLES
+
+=> A variable is an object that holds a single value of a specific type e.g., `integer`, `date`, or `varying character string`.
+
+### Where do we use variables?
+
+(a) As a loop counter to count the number of times a `loop` is performed.  
+(b) To hold a value to be tested by a control-of-flow statement such as` WHILE`.  
+(c) To store the value returned by a `stored procedure` or a `function`.
+
+## We will learn how to:
+
+=> Declare variables.  
+=> Set their values.  
+=> Assign value fields of a record to variables.
+
+## Declaring a Variable.
+
+=> To declare a variable, you use the `DECLARE` statement.
+
+```sql
+DECLARE @price DECIMAL;
+```
+
+=> The `DECLARE `statement initializes a variable by assigning it a` name` and a `data type`.  
+=>  The `variable name` must start with the` @ `sign.  
+=> By default, when a `variable is declared`, its `value` is set to `NULL`.  
+=> Between the `variable name` and `data type`, you can use the optional `AS` keyword as follows:
+
+```sql
+DECLARE @price AS DECIMAL;
+```
+
+=> To declare` multiple variables`, you separate variables by `commas`:  
+
+```sql
+DECLARE @price AS DECIMAL,
+        @brand AS VARCHAR(MAX);
+```
+
+## Assigning a value to a variable.
+
+=> To assign a value to a variable, you use the `SET` statement.
+
+```sql
+SET @price = 500;
+```
+=> The `SET` statement assigns a value to a variable.
+
+## Using variables in a query.
+
+=> The following `SELECT` statement uses the `@price `variable in the `WHERE` clause to find the shoes of a specific price:
+
+```sql
+SELECT
+    shoe_name,
+    shoe_size,
+    shoe_price 
+FROM 
+    Shoes
+WHERE 
+    shoe_price = @price
+ORDER BY
+    shoe_name;
+```
+
+=> Now, I want us to put everything together that we have learnt so far about variables and  
+   execute a code block to get a list of shoes whose price  is 500:
+
+```sql 
+DECLARE @price AS DECIMAL;
+
+SET @price = 500;
+
+SELECT
+    shoe_name,
+    shoe_size,
+    shoe_price 
+FROM 
+    Shoes
+WHERE 
+    shoe_price = @price
+ORDER BY
+    shoe_name;
+```
+
+## Stored Procedure Output Parameters.
+
+=> We will learn how to use the `output parameters` to return data back to the `calling program`.
+
+### Creating output parameters.
+
+=> To create an `output parameter` for a `stored procedure`, you use the following syntax:
+
+```sql
+parameter_name data_type OUTPUT
+```
+=>  Output parameters can be in any valid data type e.g., `integer`, `date`, and `varying character`.
+
+### Lets do an example:
+=>  The following `stored procedure` finds shoes by name and returns the number of shoes via the `@shoe_count` output parameter:
+
+```sql
+CREATE PROCEDURE findShoesByName (
+    @shoe_name VARCHAR(MAX),
+    @shoe_count INT OUTPUT
+) AS
+BEGIN
+    SELECT 
+        shoe_name,
+        shoe_price
+    FROM
+        Shoes
+    WHERE
+        shoe_name = @shoe_name;
+
+    SELECT @shoe_count = @@ROWCOUNT;
+END;
+```
+
+=>  We've assigned the number of rows returned by the query`(@@ROWCOUNT)` to the `@shoe_count` parameter.  
+=> `@@ROWCOUNT` is a system variable that returns the number of rows read by the previous statement.
+
+## Calling stored procedures with output parameters.
+=> First,` declare variables` to hold the values returned by the output parameters.    
+=> Second, use these `variables` in the stored procedure call.
+
+### Lets execute the above stored procedure.
+
+```sql
+DECLARE @count INT;
+
+EXEC findShoesByName
+    @shoe_name = 'Nike',
+    @shoe_count = @count OUTPUT;
+
+SELECT @count AS 'Number of products found';
+```
 
 
 
 
 
-
+```sql
  `THE MORE YOU KNOW, THE MORE YOU REALIZE HOW MUCH YOU DON'T KNOW. ` 
 `The less you know, the more you think you know everything. ` 
  `Knowledge is humbling.  `
 ` Ignorance is arrogant.`
+```
