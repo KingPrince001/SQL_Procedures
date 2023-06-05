@@ -429,13 +429,23 @@ EXEC findShoesByName
 SELECT @count AS 'Number of products found';
 ```
 
-
-
-
+## Stored Procedure with RETURN Value.
 
 ```sql
- `THE MORE YOU KNOW, THE MORE YOU REALIZE HOW MUCH YOU DON'T KNOW. ` 
-`The less you know, the more you think you know everything. ` 
- `Knowledge is humbling.  `
-` Ignorance is arrogant.`
+CREATE PROCEDURE IsShoeExists
+    @shoe_name INT,
+    @exists BIT OUTPUT
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM Shoes WHERE shoe_name = @shoe_name)
+        SET @exists = 1;
+    ELSE
+        SET @exists = 0;
+    RETURN @exists;
+END;
 ```
+
+=> This example defines a stored procedure `IsShoeExists` that checks if a shoe with the specified` @shoe_name` exists in the `Shoes` table. It assigns the result to the output parameter `@exists` and returns the value as the` return value` of the stored procedure.
+
+
+
